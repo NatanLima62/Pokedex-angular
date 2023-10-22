@@ -28,7 +28,7 @@ export class PokemonRegisterComponent implements OnInit {
       const pokemon: PokemonImputModel = {
         nome: this.formulario.controls['nome'].value,
         descricao: this.formulario.controls['descricao'].value,
-        pokemontipoid: this.formulario.controls['pokemontipo'].value
+        pokemonTipoId: this.formulario.controls['pokemontipo'].value
       };
       this.service.cadastrarPokemon(pokemon).subscribe({
         next: value => {

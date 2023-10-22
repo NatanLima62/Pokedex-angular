@@ -8,19 +8,19 @@ export type PokemonViewModel = {
   id: number
   nome: string
   descricao: string
-  pokemontipo: PokemonTipoViewModel
+  pokemonTipo: PokemonTipoViewModel
 }
 
 //InputModel
 export type PokemonImputModel = {
   nome: string
   descricao: string
-  pokemontipoid: number
+  pokemonTipoId: number
 }
 
 export type AtualizarPokemonImputModel = {
   id: number
   nome: string
   descricao: string
-  pokemontipoId: number
+  pokemonTipoId: number
 }

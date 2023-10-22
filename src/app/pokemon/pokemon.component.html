@@ -31,7 +31,7 @@
 
   <!--body-->
   <!--  filter-->
-  <form [formGroup]="formulario">
+  <form [formGroup]="formulario" (ngSubmit)="onBuscar()">
     <div class="form-group">
       <label for="name">Nome:</label>
       <input
@@ -47,6 +47,7 @@
       <label for="pokemon-tipo">Tipo:</label>
       <select class="form-select" id="pokemon-tipo" formControlName="pokemontipo">
         <option value="" disabled selected>Selecione um tipo</option>
+        <option value="">Todos</option>
         <option *ngFor="let tipo of tipos" [ngValue]="tipo.id">
           {{ tipo.nome }}
         </option>
@@ -67,18 +68,18 @@
           </div>
         </div>
         <div class="card-footer">
-          <span class="btn btn-primary">{{pokemon.pokemontipo}}</span>
+          <span class="btn btn-primary">{{pokemon.pokemonTipo.nome}}</span>
         </div>
       </div>
     </div>
   </div>
   <div *ngIf="pokemons == undefined">
-<!--    mostra algo para fizer q algo deu errazo-->
+    <!--    mostra algo para fizer q algo deu errazo-->
     ZAPZAP
   </div>
-  <div *ngIf="pokemons != undefined && pokemons.length < 0">
+  <div *ngIf="pokemons != undefined && pokemons.length <= 0">
     <!--    mostra algo para fizerr q nao tem pokemin-->
-    AAAAD
+    Nao foi encontrado nenhum pokemon com as informacaoes passadas
   </div>
   <!--footer-->
 
