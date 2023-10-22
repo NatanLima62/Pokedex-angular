@@ -110,6 +110,7 @@ export class PokemonComponent implements OnInit, OnDestroy {
   }
 
   limparCampos() {
-
+    this.formulario.reset();
+    this.buscarPokemons()
   }
 }
