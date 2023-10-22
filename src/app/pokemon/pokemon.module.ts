@@ -6,6 +6,7 @@ import { PokemonComponent } from './pokemon.component';
 import { PokemonRegisterComponent } from './pokemon-register/pokemon-register.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {PokemonService} from "./pokemon.service";
+import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {PokemonService} from "./pokemon.service";
   imports: [
     CommonModule,
     PokemonRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [PokemonService]
 })

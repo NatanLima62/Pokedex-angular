@@ -6,8 +6,10 @@
     </div>
     <div class="mb-3">
       <label for="pokemon-tipo" class="form-label">Tipo</label>
-      <select class="form-select" id="pokemon-tipo" formControlName="tipo">
-        <option selected>Open this select menu</option>
+      <select class="form-select" id="pokemon-tipo" formControlName="pokemontipo">
+        <option *ngFor="let tipo of tipos" [ngValue]="tipo.id">
+          {{ tipo.nome }}
+        </option>
       </select>
     </div>
     <div class="mb-3">

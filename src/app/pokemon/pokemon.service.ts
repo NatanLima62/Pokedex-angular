@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {AtualizarPokemonImputModel, PokemonImputModel, PokemonViewModel} from "./domain-types/models/pokemon";
+import {
+  AtualizarPokemonImputModel,
+  PokemonImputModel,
+  PokemonTipoViewModel,
+  PokemonViewModel
+} from "./domain-types/models/pokemon";
 import {environment} from "../../environment";
 
 @Injectable({
@@ -9,24 +14,19 @@ import {environment} from "../../environment";
 })
 export class PokemonService {
   constructor(private http: HttpClient) { }
-
-  cadastrar(pokemon: PokemonImputModel): Observable<PokemonViewModel> {
+  //Pokemon
+  cadastrarPokemon(pokemon: PokemonImputModel): Observable<PokemonViewModel> {
     const url = `${environment.apiUrl}/pokemons`;
     return this.http.post<PokemonViewModel>(url, pokemon);
   }
 
-  obterPokemons(): Observable<PokemonViewModel[]> {
+  buscarTodosPokemons(): Observable<PokemonViewModel[]> {
     const url = `${environment.apiUrl}/pokemons`;
     return this.http.get<PokemonViewModel[]>(url);
   }
 
-  // obterPokemonsPorTipo(tipo: number): Observable<PokemonViewModel[]>{
-  //   const url = `${environment.apiUrl}/obter/pokemons/tipo`;
-  //   return this.http.get<PokemonViewModel[]>(url);
-  // }
-
   removerPokemon(id: number): Observable<void> {
-    const url = `${environment.apiUrl}/pokemons`;
+    const url = `${environment.apiUrl}/pokemons/${id}`;
     return this.http.get<void>(url);
   }
 
@@ -35,8 +35,24 @@ export class PokemonService {
     return this.http.get<PokemonViewModel>(url);
   }
 
-  atualizar(id: number, pokemon: AtualizarPokemonImputModel): Observable<PokemonViewModel> {
+  atualizarPokemon(id: number, pokemon: AtualizarPokemonImputModel): Observable<PokemonViewModel> {
     const url = `${environment.apiUrl}/pokemons/${id}`;
     return this.http.put<PokemonViewModel>(url, pokemon);
+  }
+
+  obterPokemonPorNome(nome: string): Observable<PokemonViewModel> {
+    const url = `${environment.apiUrl}/pokemons/nome/${nome}`;
+    return this.http.get<PokemonViewModel>(url);
+  }
+
+  buscarTodosPokemonsPorTipo(tipo: number): Observable<PokemonViewModel[]>{
+    const url = `${environment.apiUrl}/obter/tipo/${tipo}`;
+    return this.http.get<PokemonViewModel[]>(url);
+  }
+
+  //Pokemons tipo
+  buscarTiposPokemon(): Observable<PokemonTipoViewModel[]> {
+    const url = `${environment.apiUrl}/pokemontipos`;
+    return this.http.get<PokemonTipoViewModel[]>(url);
   }
 }

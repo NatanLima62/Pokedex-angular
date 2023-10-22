@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {PokemonService} from "../pokemon.service";
-import {PokemonImputModel} from "../domain-types/models/pokemon";
+import {PokemonImputModel, PokemonTipoViewModel} from "../domain-types/models/pokemon";
 import {HttpErrorResponse} from "@angular/common/http";
 import Swal from 'sweetalert2'
 @Component({
@@ -11,6 +11,7 @@ import Swal from 'sweetalert2'
 })
 export class PokemonRegisterComponent implements OnInit {
   formulario!: FormGroup;
+  tipos!: PokemonTipoViewModel[];
 
   constructor(
     private service: PokemonService,
@@ -18,11 +19,8 @@ export class PokemonRegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.formulario = this.formBuilder.group({
-      nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(120)]],
-      tipo: [null, [Validators.required]],
-      descricao: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(250)]]
-    })
+    this.initTipos();
+    this.initForm();
   }
 
   onSubmit() {
@@ -32,7 +30,7 @@ export class PokemonRegisterComponent implements OnInit {
         descricao: this.formulario.controls['descricao'].value,
         pokemontipo: this.formulario.controls['pokemontipo'].value
       };
-      this.service.cadastrar(pokemon).subscribe({
+      this.service.cadastrarPokemon(pokemon).subscribe({
         next: value => {
           this.formulario.reset();
         },
@@ -88,5 +86,23 @@ export class PokemonRegisterComponent implements OnInit {
       }
       break;
     }
+  }
+  private initForm(){
+    this.formulario = this.formBuilder.group({
+      nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(120)]],
+      pokemontipo: [null, [Validators.required]],
+      descricao: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(250)]]
+    })
+  }
+  private initTipos(){
+    this.service.buscarTiposPokemon().subscribe({
+      next: value => {
+        this.tipos = value;
+        console.log(this.tipos);
+      },
+      error: err => {
+        this.resolveErros(err.status, err.errors);
+      }
+    });
   }
 }
