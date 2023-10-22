@@ -11,10 +11,11 @@ import {Router} from "@angular/router";
   templateUrl: './pokemon.component.html',
   styleUrls: ['./pokemon.component.scss']
 })
-export class PokemonComponent implements OnInit, OnDestroy{
+export class PokemonComponent implements OnInit, OnDestroy {
   formulario!: FormGroup;
   tipos!: PokemonTipoViewModel[];
   pokemons!: PokemonViewModel[];
+  possuiPokemons: boolean = false;
 
   constructor(
     private router: Router,
@@ -26,6 +27,7 @@ export class PokemonComponent implements OnInit, OnDestroy{
     this.initTipos();
     this.initForm();
     this.buscarPokemons();
+    this.possuiPokemons = this.pokemons.length > 0
   }
 
   onBuscar() {
@@ -59,6 +61,8 @@ export class PokemonComponent implements OnInit, OnDestroy{
     this.service.buscarPokemons().subscribe({
       next: value => {
         this.pokemons = value;
+        this.possuiPokemons = this.pokemons.length >= 1;
+        console.log(this.possuiPokemons);
       },
       error: err => {
         this.resolveErros(err.status);
@@ -67,7 +71,6 @@ export class PokemonComponent implements OnInit, OnDestroy{
   }
 
   private bucarPokemonsPorNomeETipo(nome: string, tipo: number) {
-    console.log(typeof (nome), typeof (tipo));
     this.service.buscarPokemonsPorNomeETipo(nome, tipo).subscribe({
       next: value => {
         return this.pokemons = value;
@@ -104,5 +107,9 @@ export class PokemonComponent implements OnInit, OnDestroy{
 
   abrirCard(id: number) {
     this.router.navigate([`pokemon/${id}`]);
+  }
+
+  limparCampos() {
+
   }
 }

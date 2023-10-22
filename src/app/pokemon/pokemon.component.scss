@@ -23,15 +23,16 @@
 form {
   margin-top: 1rem;
   display: flex;
-  align-items: center;
+  align-items: end;
   gap: 1rem;
 
   .form-group {
     width: 300px !important;
   }
 
-  button {
-    align-self: end;
+  .botoes{
+    display: flex;
+    gap: 2rem;
   }
 }
 
@@ -77,4 +78,8 @@ form {
 
 button {
   margin-bottom: 0;
+}
+
+.foto-alerta{
+  max-height: 20px;
 }
