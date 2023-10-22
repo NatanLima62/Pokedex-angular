@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand navbar-dark bg-primary">
   <div class="container-fluid">
     <a class="navbar-brand" routerLink="/">Pokedéx</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -17,10 +17,17 @@
 </nav>
 
 <div class="container">
+  <div class="header">
+    <div class="content">
+      <div class="content-text">
+        <h1>Cadastrar</h1>
+      </div>
+    </div>
+  </div>
   <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
     <div class="mb-3">
       <label for="nome" class="form-label">Pokemón*</label>
-      <input type="email" class="form-control" id="nome" formControlName="nome" [ngClass]="aplicaCssErro('nome')">
+      <input type="email" class="input-form form-control" id="nome" formControlName="nome" [ngClass]="aplicaCssErro('nome')">
       <div *ngIf="verificarValidTouched('nome')">
         <div *ngFor="let erro of getErrors('nome')" class="alert alert-danger" role="alert">
           <p>{{ erro }}</p>
@@ -29,7 +36,7 @@
     </div>
     <div class="mb-3">
       <label for="pokemon-tipo" class="form-label">Tipo*</label>
-      <select class="form-select" id="pokemon-tipo" formControlName="pokemontipo" aria-label="Selecione um tipo">
+      <select class="input-form form-select" id="pokemon-tipo" formControlName="pokemontipo" aria-label="Selecione um tipo">
         <option value="" disabled selected>Selecione um tipo</option>
         <option *ngFor="let tipo of tipos" [ngValue]="tipo.id">
           {{ tipo.nome }}
@@ -43,7 +50,7 @@
     </div>
     <div class="mb-3">
       <label for="descricao" class="form-label">Descrição*</label>
-      <textarea class="form-control fixed-textarea" id="descricao" formControlName="descricao"></textarea>
+      <textarea class="input-form form-control fixed-textarea" id="descricao" formControlName="descricao"></textarea>
       <div *ngIf="verificarValidTouched('descricao')">
         <div *ngFor="let erro of getErrors('descricao')" class="alert alert-danger" role="alert">
           <p>{{ erro }}</p>

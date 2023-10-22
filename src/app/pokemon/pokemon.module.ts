@@ -7,12 +7,14 @@ import { PokemonRegisterComponent } from './pokemon-register/pokemon-register.co
 import {ReactiveFormsModule} from "@angular/forms";
 import {PokemonService} from "./pokemon.service";
 import {HttpClientModule} from "@angular/common/http";
+import { PokemonDetalheComponent } from './pokemon-detalhe/pokemon-detalhe.component';
 
 
 @NgModule({
     declarations: [
         PokemonComponent,
-        PokemonRegisterComponent
+        PokemonRegisterComponent,
+        PokemonDetalheComponent
     ],
     exports: [
         PokemonComponent

@@ -4,6 +4,7 @@ import {PokemonTipoViewModel, PokemonViewModel} from "./domain-types/models/poke
 import {PokemonService} from "./pokemon.service";
 import Swal from "sweetalert2";
 import {HttpErrorResponse} from "@angular/common/http";
+import {Router, RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-pokemon',

@@ -1,4 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<!--todo: Componentizar a nav-->
+<nav class="navbar navbar-expand navbar-dark bg-primary">
   <div class="container-fluid">
     <a class="navbar-brand" routerLink="/">Pokedéx</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -11,13 +12,16 @@
           <a class="nav-link active" aria-current="page" routerLink="/" routerLinkActive="active">Meus
             pokemóns</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="cadastrar" routerLinkActive="active">Cadastrar</a>
+        </li>
       </ul>
     </div>
   </div>
 </nav>
 
 <div class="container">
-  <!--Header-->
+  <!--todo: Componentizar o container header-->
   <div class="header">
     <div class="content">
       <img src=""/>
@@ -25,12 +29,9 @@
         <h1>Bem vindo treinador!</h1>
       </div>
     </div>
-
-    <a class="btn btn-primary" href="/cadastrar">Cadastrar</a>
   </div>
 
-  <!--body-->
-  <!--  filter-->
+  <!--todo: Componentizar o formulario-->
   <form [formGroup]="formulario" (ngSubmit)="onBuscar()">
     <div class="form-group">
       <label for="name">Nome:</label>
@@ -55,32 +56,37 @@
     </div>
     <button class="btn btn-primary">Buscar</button>
   </form>
-  <!--  cards-->
+
+  <!--todo: Componentizar os cards-->
   <div class="card-items">
     <div class="col-full" *ngFor="let pokemon of pokemons">
-      <div class="card">
-        <div class="card-header">
-          <h5>{{pokemon.nome}}</h5>
-        </div>
-        <div class="card-body">
-          <div class="card-img">
-            Imagem
+      <a [routerLink]="['/pokemon', pokemon.id]">
+        <div class="card">
+          <div class="card-header">
+            <h5>{{pokemon.nome}}</h5>
+          </div>
+          <div class="card-body">
+            <div class="card-img">
+              <span>Imagem</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="btn btn-primary">{{pokemon.pokemonTipo.nome}}</span>
           </div>
         </div>
-        <div class="card-footer">
-          <span class="btn btn-primary">{{pokemon.pokemonTipo.nome}}</span>
-        </div>
-      </div>
+      </a>
     </div>
   </div>
+
+  <!--todo: MOstrar os erros -->
   <div *ngIf="pokemons == undefined">
     <!--    mostra algo para fizer q algo deu errazo-->
     ZAPZAP
   </div>
+
+  <!--todo: MOstrar os erros-->
   <div *ngIf="pokemons != undefined && pokemons.length <= 0">
     <!--    mostra algo para fizerr q nao tem pokemin-->
     Nao foi encontrado nenhum pokemon com as informacaoes passadas
   </div>
-  <!--footer-->
-
 </div>

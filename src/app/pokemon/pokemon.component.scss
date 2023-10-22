@@ -45,6 +45,33 @@ form {
     grid-template-columns: 1fr 1fr 1fr;
     gap: 1rem;
     margin-top: 2rem;
+    cursor: pointer;
+    a {
+      text-decoration: none;
+    }
+
+      .card{
+
+        .card-body{
+
+          .card-img{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100px;
+          }
+        }
+
+        .card-footer{
+          display: flex;
+          justify-content: center;
+
+          span{
+            cursor: auto;
+            width: 60%;
+          }
+        }
+      }
   }
 }
 
