@@ -60,7 +60,7 @@
   <!--todo: Componentizar os cards-->
   <div class="card-items">
     <div class="col-full" *ngFor="let pokemon of pokemons">
-      <a [routerLink]="['/pokemon', pokemon.id]">
+      <a (click)="abrirCard(pokemon.id)">
         <div class="card">
           <div class="card-header">
             <h5>{{pokemon.nome}}</h5>

@@ -1,1 +1,69 @@
-<p>pokemon-detalhe works!</p>
+<!--todo: Componentizar a nav-->
+<nav class="navbar navbar-expand navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/">Pokedéx</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/" routerLinkActive="active">Meus
+            pokemóns</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/pokemon/cadastrar" routerLinkActive="active">Cadastrar</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="header">
+    <div class="content">
+      <div class="content-text">
+        <h1>Detalhes</h1>
+      </div>
+    </div>
+  </div>
+  <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="nome" class="form-label">Pokemón*</label>
+      <input type="email" class="input-form form-control" id="nome" formControlName="nome" [ngClass]="aplicaCssErro('nome')">
+      <div *ngIf="verificarValidTouched('nome')">
+        <div *ngFor="let erro of getErrors('nome')" class="alert alert-danger" role="alert">
+          <span>{{ erro }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="pokemon-tipo" class="form-label">Tipo*</label>
+      <select class="input-form form-select" id="pokemon-tipo" formControlName="pokemontipo" aria-label="Selecione um tipo">
+        <option value="" disabled selected>Selecione um tipo</option>
+        <option *ngFor="let tipo of tipos" [ngValue]="tipo.id">
+          {{ tipo.nome }}
+        </option>
+      </select>
+      <div *ngIf="verificarValidTouched('pokemontipo')">
+        <div *ngFor="let erro of getErrors('pokemontipo')" class="alert alert-danger" role="alert">
+          <span>{{ erro }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="descricao" class="form-label">Descrição*</label>
+      <textarea class="input-form form-control fixed-textarea" id="descricao" formControlName="descricao"></textarea>
+      <div *ngIf="verificarValidTouched('descricao')">
+        <div *ngFor="let erro of getErrors('descricao')" class="alert alert-danger" role="alert">
+          <span>{{ erro }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="botoes">
+      <button type="submit" class="btn btn-warning">Atualizar</button>
+      <button type="button" (click)="removerPokemon()" class="btn btn-danger">Remover</button>
+    </div>
+  </form>
+</div>

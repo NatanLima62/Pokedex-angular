@@ -1,22 +1,23 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {PokemonTipoViewModel, PokemonViewModel} from "./domain-types/models/pokemon";
 import {PokemonService} from "./pokemon.service";
 import Swal from "sweetalert2";
 import {HttpErrorResponse} from "@angular/common/http";
-import {Router, RouterLink} from "@angular/router";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-pokemon',
   templateUrl: './pokemon.component.html',
   styleUrls: ['./pokemon.component.scss']
 })
-export class PokemonComponent implements OnInit {
+export class PokemonComponent implements OnInit, OnDestroy{
   formulario!: FormGroup;
   tipos!: PokemonTipoViewModel[];
   pokemons!: PokemonViewModel[];
 
   constructor(
+    private router: Router,
     private service: PokemonService,
     private formBuilder: FormBuilder) {
   }
@@ -96,5 +97,12 @@ export class PokemonComponent implements OnInit {
       }
         break;
     }
+  }
+
+  ngOnDestroy(): void {
+  }
+
+  abrirCard(id: number) {
+    this.router.navigate([`pokemon/${id}`]);
   }
 }

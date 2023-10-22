@@ -8,6 +8,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {PokemonService} from "./pokemon.service";
 import {HttpClientModule} from "@angular/common/http";
 import { PokemonDetalheComponent } from './pokemon-detalhe/pokemon-detalhe.component';
+import {RouterModule} from "@angular/router";
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { PokemonDetalheComponent } from './pokemon-detalhe/pokemon-detalhe.compo
     CommonModule,
     PokemonRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule
   ],
   providers: [PokemonService]
 })

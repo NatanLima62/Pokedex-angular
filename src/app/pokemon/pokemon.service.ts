@@ -24,7 +24,7 @@ export class PokemonService {
 
   removerPokemon(id: number): Observable<void> {
     const url = `${environment.apiUrl}/pokemons/${id}`;
-    return this.http.get<void>(url);
+    return this.http.delete<void>(url);
   }
 
 

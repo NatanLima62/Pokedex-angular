@@ -1,0 +1,70 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .content {
+    display: flex;
+
+    .content-text {
+      h1 {
+        font-size: 1.75rem;
+        margin-bottom: 0;
+      }
+
+      p {
+        font-size: 1rem;
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+form {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .form-group {
+    width: 300px !important;
+  }
+
+  .input-form{
+    min-width: 400px;
+  }
+
+  .botoes{
+    display: flex;
+    gap: 20px;
+    button {
+      align-self: start;
+    }
+  }
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+
+  .card-items {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+}
+
+button {
+  margin-bottom: 0;
+}
+
+.fixed-textarea {
+  resize: none;
+  min-height: 100px;
+}
+
+.alert {
+  margin-top: 3px;
+}

@@ -30,7 +30,7 @@
       <input type="email" class="input-form form-control" id="nome" formControlName="nome" [ngClass]="aplicaCssErro('nome')">
       <div *ngIf="verificarValidTouched('nome')">
         <div *ngFor="let erro of getErrors('nome')" class="alert alert-danger" role="alert">
-          <p>{{ erro }}</p>
+          <span>{{ erro }}</span>
         </div>
       </div>
     </div>
@@ -44,7 +44,7 @@
       </select>
       <div *ngIf="verificarValidTouched('pokemontipo')">
         <div *ngFor="let erro of getErrors('pokemontipo')" class="alert alert-danger" role="alert">
-          <p>{{ erro }}</p>
+          <span>{{ erro }}</span>
         </div>
       </div>
     </div>
@@ -53,7 +53,7 @@
       <textarea class="input-form form-control fixed-textarea" id="descricao" formControlName="descricao"></textarea>
       <div *ngIf="verificarValidTouched('descricao')">
         <div *ngFor="let erro of getErrors('descricao')" class="alert alert-danger" role="alert">
-          <p>{{ erro }}</p>
+          <span>{{ erro }}</span>
         </div>
       </div>
     </div>

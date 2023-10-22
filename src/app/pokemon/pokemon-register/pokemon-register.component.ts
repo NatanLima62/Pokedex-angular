@@ -4,6 +4,7 @@ import {PokemonService} from "../pokemon.service";
 import {PokemonImputModel, PokemonTipoViewModel} from "../domain-types/models/pokemon";
 import {HttpErrorResponse} from "@angular/common/http";
 import Swal from 'sweetalert2'
+
 @Component({
   selector: 'app-pokemon-register',
   templateUrl: './pokemon-register.component.html',
@@ -94,7 +95,7 @@ export class PokemonRegisterComponent implements OnInit {
     return errors;
   }
 
-  private resolveErros(error: HttpErrorResponse){
+  private resolveErros(error: HttpErrorResponse) {
     switch (error.status) {
       case 400: {
         Swal.fire({
@@ -103,7 +104,7 @@ export class PokemonRegisterComponent implements OnInit {
           text: `${error.error.erros}`,
         })
       }
-      break;
+        break;
 
       case 404: {
         Swal.fire(
@@ -111,17 +112,19 @@ export class PokemonRegisterComponent implements OnInit {
           'question'
         )
       }
-      break;
+        break;
     }
   }
-  private initForm(){
+
+  private initForm() {
     this.formulario = this.formBuilder.group({
       nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(120)]],
       pokemontipo: [null, [Validators.required]],
       descricao: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(250)]]
     })
   }
-  private initTipos(){
+
+  private initTipos() {
     this.service.buscarTiposPokemon().subscribe({
       next: value => {
         this.tipos = value;
