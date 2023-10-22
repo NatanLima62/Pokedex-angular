@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {PokemonTipoViewModel, PokemonViewModel} from "./domain-types/models/pokemon";
 import {PokemonService} from "./pokemon.service";
@@ -11,10 +11,10 @@ import {Router} from "@angular/router";
   templateUrl: './pokemon.component.html',
   styleUrls: ['./pokemon.component.scss']
 })
-export class PokemonComponent implements OnInit, OnDestroy {
+export class PokemonComponent implements OnInit {
   formulario!: FormGroup;
-  tipos!: PokemonTipoViewModel[];
-  pokemons!: PokemonViewModel[];
+  tipos: PokemonTipoViewModel[] = [];
+  pokemons: PokemonViewModel[] = [];
   possuiPokemons: boolean = false;
 
   constructor(
@@ -27,7 +27,6 @@ export class PokemonComponent implements OnInit, OnDestroy {
     this.initTipos();
     this.initForm();
     this.buscarPokemons();
-    this.possuiPokemons = this.pokemons.length > 0
   }
 
   onBuscar() {
@@ -61,8 +60,7 @@ export class PokemonComponent implements OnInit, OnDestroy {
     this.service.buscarPokemons().subscribe({
       next: value => {
         this.pokemons = value;
-        this.possuiPokemons = this.pokemons.length >= 1;
-        console.log(this.possuiPokemons);
+        this.possuiPokemons = this.pokemons.length > 0
       },
       error: err => {
         this.resolveErros(err.status);
@@ -100,9 +98,6 @@ export class PokemonComponent implements OnInit, OnDestroy {
       }
         break;
     }
-  }
-
-  ngOnDestroy(): void {
   }
 
   abrirCard(id: number) {

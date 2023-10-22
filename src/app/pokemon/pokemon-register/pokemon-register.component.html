@@ -57,6 +57,16 @@
         </div>
       </div>
     </div>
+
+    <div class="mb-3">
+      <label for="imagem" class="form-label">Imagem*</label>
+      <input type="file" class="input-form form-control" id="imagem" formControlName="imagem">
+      <div *ngIf="verificarValidTouched('imagem')">
+        <div *ngFor="let erro of getErrors('imagem')" class="alert alert-danger" role="alert">
+          <span>{{ erro }}</span>
+        </div>
+      </div>
+    </div>
     <button type="submit" class="btn btn-primary">Cadastrar</button>
   </form>
 </div>
