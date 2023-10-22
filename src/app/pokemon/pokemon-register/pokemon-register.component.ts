@@ -28,24 +28,28 @@ export class PokemonRegisterComponent implements OnInit {
       const pokemon: PokemonImputModel = {
         nome: this.formulario.controls['nome'].value,
         descricao: this.formulario.controls['descricao'].value,
-        pokemontipo: this.formulario.controls['pokemontipo'].value
+        pokemontipoid: this.formulario.controls['pokemontipo'].value
       };
       this.service.cadastrarPokemon(pokemon).subscribe({
         next: value => {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Pokemón cadastrado com sucesso!',
+            showConfirmButton: false,
+            timer: 1500
+          })
           this.formulario.reset();
         },
 
         error: (err: HttpErrorResponse) => {
-          this.resolveErros(err.status, err.error)
+          console.log(err)
+          this.resolveErros(err)
         }
       });
     } else {
       this.verificarValidacoesDeErro(this.formulario);
     }
-  }
-
-  verificarValidTouched(campo: string) {
-    return !this.formulario.get(campo)?.valid && (this.formulario.get(campo)?.touched || this.formulario.get(campo)?.dirty);
   }
 
   aplicaCssErro(campo: string) {
@@ -67,13 +71,36 @@ export class PokemonRegisterComponent implements OnInit {
     });
   }
 
-  private resolveErros(status: number, error: string[]){
-    switch (status) {
+  verificarValidTouched(campo: string) {
+    return !this.formulario.get(campo)?.valid && (this.formulario.get(campo)?.touched || this.formulario.get(campo)?.dirty);
+  }
+
+  getErrors(controlName: string): string[] {
+    const control = this.formulario.get(controlName);
+    const errors: string[] = [];
+
+    if (control?.errors) {
+      for (const errorKey in control.errors) {
+        if (errorKey === 'required') {
+          errors.push('Campo obrigatório.');
+        } else if (errorKey === 'minlength') {
+          errors.push(`${controlName} deve ter pelo menos ${control.errors[errorKey].requiredLength} caracteres.`);
+        } else if (errorKey === 'maxlength') {
+          errors.push(`${controlName} der no máximo ${control.errors[errorKey].requiredLength} caracteres.`);
+        }
+      }
+    }
+
+    return errors;
+  }
+
+  private resolveErros(error: HttpErrorResponse){
+    switch (error.status) {
       case 400: {
         Swal.fire({
           icon: 'error',
-          title: 'Falha ao cadastrar um pókemon!',
-          text: `${error}`,
+          title: `${error.error.title}`,
+          text: `${error.error.erros}`,
         })
       }
       break;
@@ -98,10 +125,9 @@ export class PokemonRegisterComponent implements OnInit {
     this.service.buscarTiposPokemon().subscribe({
       next: value => {
         this.tipos = value;
-        console.log(this.tipos);
       },
       error: err => {
-        this.resolveErros(err.status, err.errors);
+        this.resolveErros(err);
       }
     });
   }

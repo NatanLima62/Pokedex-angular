@@ -1,11 +1,28 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/">Pokedéx</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/" routerLinkActive="active">Meus
+            pokemóns</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
 <div class="container">
   <!--Header-->
   <div class="header">
     <div class="content">
-      <img src="" />
+      <img src=""/>
       <div class="content-text">
-        <h1>Pokedéx</h1>
-        <p>pokedex</p>
+        <h1>Bem vindo treinador!</h1>
       </div>
     </div>
 
@@ -14,7 +31,7 @@
 
   <!--body-->
   <!--  filter-->
-  <form>
+  <form [formGroup]="formulario">
     <div class="form-group">
       <label for="name">Nome:</label>
       <input
@@ -23,34 +40,46 @@
         id="name"
         aria-describedby="name"
         placeholder="Digite o nome do pokemon"
+        formControlName="nome"
       />
     </div>
     <div class="form-group">
-      <label for="tipo">Tipo:</label>
-      <select class="form-select" aria-label="Default select example" id="tipo">
-        <option selected>Open this select menu</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
+      <label for="pokemon-tipo">Tipo:</label>
+      <select class="form-select" id="pokemon-tipo" formControlName="pokemontipo">
+        <option value="" disabled selected>Selecione um tipo</option>
+        <option *ngFor="let tipo of tipos" [ngValue]="tipo.id">
+          {{ tipo.nome }}
+        </option>
       </select>
     </div>
-    <button type="submit" class="btn btn-primary">Buscar</button>
+    <button class="btn btn-primary">Buscar</button>
   </form>
   <!--  cards-->
   <div class="card-items">
-    <div class="col-full">
+    <div class="col-full" *ngFor="let pokemon of pokemons">
       <div class="card">
+        <div class="card-header">
+          <h5>{{pokemon.nome}}</h5>
+        </div>
         <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">
-            Some quick example text to build on the card title and make up the bulk
-            of the card's content.
-          </p>
+          <div class="card-img">
+            Imagem
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="btn btn-primary">{{pokemon.pokemontipo}}</span>
         </div>
       </div>
     </div>
   </div>
-
+  <div *ngIf="pokemons == undefined">
+<!--    mostra algo para fizer q algo deu errazo-->
+    ZAPZAP
+  </div>
+  <div *ngIf="pokemons != undefined && pokemons.length < 0">
+    <!--    mostra algo para fizerr q nao tem pokemin-->
+    AAAAD
+  </div>
   <!--footer-->
 
 </div>

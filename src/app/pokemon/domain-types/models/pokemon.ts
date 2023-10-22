@@ -15,7 +15,7 @@ export type PokemonViewModel = {
 export type PokemonImputModel = {
   nome: string
   descricao: string
-  pokemontipo: PokemonTipoViewModel
+  pokemontipoid: number
 }
 
 export type AtualizarPokemonImputModel = {
