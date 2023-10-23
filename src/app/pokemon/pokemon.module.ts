@@ -9,17 +9,23 @@ import {PokemonService} from "./pokemon.service";
 import {HttpClientModule} from "@angular/common/http";
 import { PokemonDetalheComponent } from './pokemon-detalhe/pokemon-detalhe.component';
 import {RouterModule} from "@angular/router";
+import { PokemonNavComponent } from './shared/components/pokemon-nav/pokemon-nav.component';
+import { PokemonHeaderComponent } from './shared/components/pokemon-header/pokemon-header.component';
+import {BaseService} from "./shared/services/base.service";
 
 
 @NgModule({
     declarations: [
         PokemonComponent,
         PokemonRegisterComponent,
-        PokemonDetalheComponent
+        PokemonDetalheComponent,
+        PokemonNavComponent,
+        PokemonHeaderComponent,
     ],
-    exports: [
-        PokemonComponent
-    ],
+  exports: [
+    PokemonComponent,
+    PokemonNavComponent
+  ],
   imports: [
     CommonModule,
     PokemonRoutingModule,
@@ -28,6 +34,6 @@ import {RouterModule} from "@angular/router";
     RouterModule,
     NgOptimizedImage
   ],
-  providers: [PokemonService]
+  providers: [PokemonService, BaseService]
 })
 export class PokemonModule { }

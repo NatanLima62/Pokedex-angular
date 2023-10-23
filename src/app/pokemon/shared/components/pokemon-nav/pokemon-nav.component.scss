@@ -1,0 +1,16 @@
+.navbar {
+
+  .container-fluid {
+
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+
+    .navbar-nav{
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

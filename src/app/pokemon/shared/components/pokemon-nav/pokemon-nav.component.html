@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/">
+      Pokedéx
+      <img ngSrc="../../assets/pokebola.png" alt="pokebola" height="24" width="24"/>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li routerLinkActive="active" class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/">Pokemóns</a>
+        </li>
+        <li class="nav-link active" class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/pokemons/cadastrar">Cadastrar</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,29 +1,28 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {PokemonService} from "../pokemon.service";
-import {PokemonImputModel, PokemonTipoViewModel} from "../domain-types/models/pokemon";
+import {PokemonImputModel} from "../domain-types/models/pokemon";
 import {HttpErrorResponse} from "@angular/common/http";
 import Swal from 'sweetalert2'
+import {BaseService} from "../shared/services/base.service";
 
 @Component({
   selector: 'app-pokemon-register',
   templateUrl: './pokemon-register.component.html',
   styleUrls: ['./pokemon-register.component.scss']
 })
-export class PokemonRegisterComponent implements OnInit {
+export class PokemonRegisterComponent extends BaseService implements OnInit{
   formulario!: FormGroup;
-  tipos!: PokemonTipoViewModel[];
-
-  constructor(
-    private service: PokemonService,
-    private formBuilder: FormBuilder) {
-  }
+  valorHeader: string = "Cadastrar";
 
   ngOnInit(): void {
     this.initTipos();
     this.initForm();
   }
 
+  constructor(private formBuilder: FormBuilder, private pokemonService: PokemonService) {
+    super(pokemonService);
+  }
   onSubmit() {
     if (this.formulario.valid) {
       const pokemon: PokemonImputModel = {
@@ -96,27 +95,6 @@ export class PokemonRegisterComponent implements OnInit {
     return errors;
   }
 
-  private resolveErros(error: HttpErrorResponse) {
-    switch (error.status) {
-      case 400: {
-        Swal.fire({
-          icon: 'error',
-          title: `${error.error.title}`,
-          text: `${error.error.erros}`,
-        })
-      }
-        break;
-
-      case 404: {
-        Swal.fire(
-          'Página não encontrada',
-          'question'
-        )
-      }
-        break;
-    }
-  }
-
   private initForm() {
     this.formulario = this.formBuilder.group({
       nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(120)]],
@@ -124,16 +102,5 @@ export class PokemonRegisterComponent implements OnInit {
       descricao: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(250)]],
       imagem: []
     })
-  }
-
-  private initTipos() {
-    this.service.buscarTiposPokemon().subscribe({
-      next: value => {
-        this.tipos = value;
-      },
-      error: err => {
-        this.resolveErros(err);
-      }
-    });
   }
 }

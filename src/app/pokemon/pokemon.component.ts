@@ -16,6 +16,7 @@ export class PokemonComponent implements OnInit {
   tipos: PokemonTipoViewModel[] = [];
   pokemons: PokemonViewModel[] = [];
   possuiPokemons: boolean = false;
+  valorHeader: string = "Bem vindo treinador!";
 
   constructor(
     private router: Router,
@@ -101,7 +102,7 @@ export class PokemonComponent implements OnInit {
   }
 
   abrirCard(id: number) {
-    this.router.navigate([`pokemon/${id}`]);
+    this.router.navigate([`pokemons/${id}`]);
   }
 
   limparCampos() {

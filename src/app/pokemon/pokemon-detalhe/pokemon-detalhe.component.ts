@@ -21,6 +21,7 @@ export class PokemonDetalheComponent implements OnInit {
   tipos!: PokemonTipoViewModel[];
   pokemon!: PokemonViewModel;
   pokemonId!: number;
+  valorHeader: string = "Detalhes do pokemón";
 
   constructor(
     private router: Router,
@@ -161,7 +162,8 @@ export class PokemonDetalheComponent implements OnInit {
       this.formulario.setValue({
         nome: this.pokemon.nome,
         pokemontipo: this.pokemon.pokemonTipo.id,
-        descricao: this.pokemon.descricao
+        descricao: this.pokemon.descricao,
+        imagem: this.pokemon.imagem
       });
     } else {
       console.log('Pokemon não encontrado');
