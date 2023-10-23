@@ -5,6 +5,7 @@ import {PokemonService} from "./pokemon.service";
 import Swal from "sweetalert2";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-pokemon',
@@ -115,5 +116,10 @@ export class PokemonComponent implements OnInit {
       pokemon.imagem = '../../assets/default-image.png';
     }
     return pokemon.imagem;
+  }
+
+  formatarTexto(texto: string): string {
+    const textoSemAcentos = _.deburr(texto);
+    return textoSemAcentos.toLowerCase();
   }
 }

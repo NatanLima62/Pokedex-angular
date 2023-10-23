@@ -4,7 +4,7 @@
   <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
     <div class="mb-3">
       <label for="nome" class="form-label">Pokemón*</label>
-      <input type="email" class="input-form form-control" id="nome" formControlName="nome" [ngClass]="('nome')">
+      <input type="email" class="input-form form-control" id="nome" formControlName="nome">
       <div *ngIf="verificarValidTouched('nome')">
         <div *ngFor="let erro of getErrors('nome')" class="alert alert-danger" role="alert">
           <span>{{ erro }}</span>
@@ -43,6 +43,6 @@
         </div>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary">Cadastrar</button>
+    <button type="submit" class="btn btn-danger">Cadastrar</button>
   </form>
 </div>

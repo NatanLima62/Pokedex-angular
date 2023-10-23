@@ -89,13 +89,6 @@ export class PokemonDetalheComponent implements OnInit {
     return errors;
   }
 
-  aplicaCssErro(campo: string) {
-    return {
-      'has-erro': this.verificarValidTouched(campo),
-      'has-feedback': this.verificarValidTouched(campo),
-    }
-  }
-
   verificarValidTouched(campo: string) {
     return !this.formulario.get(campo)?.valid && (this.formulario.get(campo)?.touched || this.formulario.get(campo)?.dirty);
   }
@@ -170,7 +163,7 @@ export class PokemonDetalheComponent implements OnInit {
     }
   }
 
-  private initTipos() {
+  protected initTipos() {
     this.service.buscarTiposPokemon().subscribe({
       next: value => {
         this.tipos = value;

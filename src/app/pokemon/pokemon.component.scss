@@ -32,8 +32,8 @@ form {
 
     .card {
 
-      max-height: 240px;
-      max-width: 220px;
+      height: 240px;
+      width: 220px;
 
       .card-header{
         max-height: 50px;
@@ -55,8 +55,8 @@ form {
           align-items: center;
 
           img {
-            max-height: 100px;
-            max-width: 100px;
+            height: 100px;
+            width: 100px;
           }
         }
       }
@@ -64,9 +64,9 @@ form {
       .card-footer {
         display: flex;
         justify-content: center;
+        background: whitesmoke;
 
         span {
-          cursor: auto;
           width: 60%;
         }
       }
@@ -119,6 +119,70 @@ button {
   }
 }
 
-@media screen and (max-width: 410px) {
+.ferro {
+  background-color: #cccccc;
+}
 
+.fogo {
+  background-color: #FDDFDF;
+}
+
+.grama {
+  background-color: #DEFDE0;
+}
+
+.eletrico {
+  background-color: #FCF7DE;
+}
+
+.agua, .gelo {
+  background-color: #DEF3FD;
+}
+
+.terra {
+  background-color: #f4e7da;
+}
+
+.pedra {
+  background-color: #d5d5d4;
+}
+
+.fada {
+  background-color: #fceaff;
+}
+
+.veneno {
+  background-color: #c4add6;
+}
+
+.inseto {
+  background-color: #f8d5a3;
+}
+
+.dragao {
+  background-color: #97b3e6;
+}
+
+.psiquico {
+  background-color: #eaeda1;
+}
+
+.voador {
+  background-color: #b5e2ef;
+}
+
+.lutador {
+  background-color: #E6E0D4;
+}
+
+.fantasma {
+  background-color: #ebc2c2;
+}
+
+.normal {
+  background-color: white;
+}
+
+.sombrio {
+  background-color: #a783bd;
 }

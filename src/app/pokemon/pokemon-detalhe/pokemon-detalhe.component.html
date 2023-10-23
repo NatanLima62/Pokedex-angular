@@ -4,7 +4,7 @@
   <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
     <div class="mb-3">
       <label for="nome" class="form-label">Pokemón*</label>
-      <input type="email" class="input-form form-control" id="nome" formControlName="nome" [ngClass]="aplicaCssErro('nome')">
+      <input type="email" class="input-form form-control" id="nome" formControlName="nome">
       <div *ngIf="verificarValidTouched('nome')">
         <div *ngFor="let erro of getErrors('nome')" class="alert alert-danger" role="alert">
           <span>{{ erro }}</span>
@@ -13,7 +13,7 @@
     </div>
     <div class="mb-3">
       <label for="pokemon-tipo" class="form-label">Tipo*</label>
-      <select class="input-form form-select" id="pokemon-tipo" formControlName="pokemontipo" aria-label="Selecione um tipo">
+      <select class="input-form form-select" id="pokemon-tipo" formControlName="pokemontipo"  aria-label="Selecione um tipo">
         <option value="" disabled selected>Selecione um tipo</option>
         <option *ngFor="let tipo of tipos" [ngValue]="tipo.id">
           {{ tipo.nome }}

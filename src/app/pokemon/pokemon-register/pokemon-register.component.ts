@@ -53,13 +53,6 @@ export class PokemonRegisterComponent extends BaseService implements OnInit{
     }
   }
 
-  aplicaCssErro(campo: string) {
-    return {
-      'has-erro': this.verificarValidTouched(campo),
-      'has-feedback': this.verificarValidTouched(campo),
-    }
-  }
-
   private verificarValidacoesDeErro(formGroup: FormGroup) {
     Object.keys(this.formulario.controls).forEach((campo) => {
       const controle = this.formulario.get(campo);
