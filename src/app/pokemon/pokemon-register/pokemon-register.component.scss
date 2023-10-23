@@ -1,3 +1,15 @@
+.navbar{
+
+  .container-fluid{
+
+    .navbar-brand{
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+  }
+}
+
 .header {
   display: flex;
   justify-content: space-between;

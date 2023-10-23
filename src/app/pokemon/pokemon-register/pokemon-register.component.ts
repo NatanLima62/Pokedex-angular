@@ -29,7 +29,8 @@ export class PokemonRegisterComponent implements OnInit {
       const pokemon: PokemonImputModel = {
         nome: this.formulario.controls['nome'].value,
         descricao: this.formulario.controls['descricao'].value,
-        pokemonTipoId: this.formulario.controls['pokemontipo'].value
+        pokemonTipoId: this.formulario.controls['pokemontipo'].value,
+        imagem: this.formulario.controls['imagem'].value
       };
       this.service.cadastrarPokemon(pokemon).subscribe({
         next: value => {
@@ -120,7 +121,8 @@ export class PokemonRegisterComponent implements OnInit {
     this.formulario = this.formBuilder.group({
       nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(120)]],
       pokemontipo: [null, [Validators.required]],
-      descricao: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(250)]]
+      descricao: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(250)]],
+      imagem: []
     })
   }
 

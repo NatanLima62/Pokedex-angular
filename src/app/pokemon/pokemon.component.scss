@@ -1,3 +1,15 @@
+.navbar {
+
+  .container-fluid {
+
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+  }
+}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -30,7 +42,7 @@ form {
     width: 300px !important;
   }
 
-  .botoes{
+  .botoes {
     display: flex;
     gap: 2rem;
   }
@@ -47,32 +59,52 @@ form {
     gap: 1rem;
     margin-top: 2rem;
     cursor: pointer;
+
     a {
       text-decoration: none;
     }
 
-      .card{
+    .card {
 
-        .card-body{
+      max-height: 240px;
+      max-width: 220px;
 
-          .card-img{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100px;
-          }
+      .card-header{
+        max-height: 50px;
+
+        h5{
+          white-space: nowrap;
+          max-width: 100%;
+          overflow: hidden;
         }
+      }
 
-        .card-footer{
+      .card-body {
+        display: flex;
+        justify-content: center;
+
+        .card-img {
           display: flex;
           justify-content: center;
+          align-items: center;
 
-          span{
-            cursor: auto;
-            width: 60%;
+          img {
+            max-height: 100px;
+            max-width: 100px;
           }
         }
       }
+
+      .card-footer {
+        display: flex;
+        justify-content: center;
+
+        span {
+          cursor: auto;
+          width: 60%;
+        }
+      }
+    }
   }
 }
 
@@ -80,6 +112,43 @@ button {
   margin-bottom: 0;
 }
 
-.foto-alerta{
+.foto-alerta {
   max-height: 20px;
+}
+
+@media screen and (max-width: 610px) {
+  form {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .container .card-items {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 510px) {
+  .header {
+    justify-content: center;
+  }
+  form {
+    flex-direction: column;
+    align-items: center;
+
+    .botoes {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+  }
+
+  .container .card-items {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .card {
+    min-height: 240px;
+    min-width: 220px;
+  }
 }

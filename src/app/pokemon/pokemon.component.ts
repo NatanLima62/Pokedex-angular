@@ -108,4 +108,11 @@ export class PokemonComponent implements OnInit {
     this.formulario.reset();
     this.buscarPokemons()
   }
+
+  corrigirImagem(pokemon: PokemonViewModel) {
+    if (!pokemon.imagem) {
+      pokemon.imagem = '../../assets/default-image.png';
+    }
+    return pokemon.imagem;
+  }
 }

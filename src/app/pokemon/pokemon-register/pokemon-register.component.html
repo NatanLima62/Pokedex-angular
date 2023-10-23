@@ -1,6 +1,9 @@
 <nav class="navbar navbar-expand navbar-dark bg-primary">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/">Pokedéx</a>
+    <a class="navbar-brand" routerLink="/">
+      Pokedéx
+      <img ngSrc="../../assets/pokebola.png" alt="pokebola" height="24" width="24"/>
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -10,6 +13,9 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" routerLink="/" routerLinkActive="active">Meus
             pokemóns</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="cadastrar" routerLinkActive="active">Cadastrar</a>
         </li>
       </ul>
     </div>
@@ -59,8 +65,8 @@
     </div>
 
     <div class="mb-3">
-      <label for="imagem" class="form-label">Imagem*</label>
-      <input type="file" class="input-form form-control" id="imagem" formControlName="imagem">
+      <label for="imagem" class="form-label">Imagem url</label>
+      <input type="url" class="input-form form-control" id="imagem" formControlName="imagem">
       <div *ngIf="verificarValidTouched('imagem')">
         <div *ngFor="let erro of getErrors('imagem')" class="alert alert-danger" role="alert">
           <span>{{ erro }}</span>

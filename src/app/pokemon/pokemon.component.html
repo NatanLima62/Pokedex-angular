@@ -1,7 +1,10 @@
 <!--todo: Componentizar a nav-->
 <nav class="navbar navbar-expand navbar-dark bg-primary">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/">Pokedéx</a>
+    <a class="navbar-brand" routerLink="/">
+      Pokedéx
+      <img ngSrc="../../assets/pokebola.png" alt="pokebola" height="24" width="24"/>
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -24,7 +27,6 @@
   <!--todo: Componentizar o container header-->
   <div class="header">
     <div class="content">
-      <img src=""/>
       <div class="content-text">
         <h1>Bem vindo treinador!</h1>
       </div>
@@ -54,7 +56,7 @@
         </option>
       </select>
     </div>
-    <div class="botoes">
+    <div class="botoes form-group">
       <button class="btn btn-primary">Buscar</button>
       <span class="btn btn-info" (click)="limparCampos()">Limpar</span>
     </div>
@@ -70,7 +72,7 @@
           </div>
           <div class="card-body">
             <div class="card-img">
-              <span>Imagem</span>
+              <img [src]="corrigirImagem(pokemon)" alt="imagem-padrao-pokebola">
             </div>
           </div>
           <div class="card-footer">
