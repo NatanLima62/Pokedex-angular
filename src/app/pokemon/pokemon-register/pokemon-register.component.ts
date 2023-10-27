@@ -1,27 +1,38 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {PokemonService} from "../pokemon.service";
-import {PokemonImputModel} from "../domain-types/models/pokemon";
+import {PokemonImputModel, PokemonTipoViewModel, PokemonViewModel} from "../domain-types/models/pokemon";
 import {HttpErrorResponse} from "@angular/common/http";
 import Swal from 'sweetalert2'
-import {BaseService} from "../shared/services/base.service";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgForOf, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-pokemon-register',
+  standalone: true,
   templateUrl: './pokemon-register.component.html',
+  imports: [
+    ReactiveFormsModule,
+    NgIf,
+    NgForOf
+  ],
   styleUrls: ['./pokemon-register.component.scss']
 })
-export class PokemonRegisterComponent extends BaseService implements OnInit{
+export class PokemonRegisterComponent implements OnInit{
   formulario!: FormGroup;
-  valorHeader: string = "Cadastrar";
+  tipos: PokemonTipoViewModel[] = [];
+  pokemons: PokemonViewModel[] = [];
+  @Output() cadastroSucessoEnviado: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   ngOnInit(): void {
     this.initTipos();
     this.initForm();
   }
 
-  constructor(private formBuilder: FormBuilder, private pokemonService: PokemonService) {
-    super(pokemonService);
+  constructor(
+    private formBuilder: FormBuilder,
+    private pokemonService: PokemonService,
+    public activeModal: NgbActiveModal) {
   }
   onSubmit() {
     if (this.formulario.valid) {
@@ -31,8 +42,8 @@ export class PokemonRegisterComponent extends BaseService implements OnInit{
         pokemonTipoId: this.formulario.controls['pokemontipo'].value,
         imagem: this.formulario.controls['imagem'].value
       };
-      this.service.cadastrarPokemon(pokemon).subscribe({
-        next: value => {
+      this.pokemonService.cadastrarPokemon(pokemon).subscribe({
+        next: () => {
           Swal.fire({
             position: 'center',
             icon: 'success',
@@ -41,6 +52,7 @@ export class PokemonRegisterComponent extends BaseService implements OnInit{
             timer: 1500
           })
           this.formulario.reset();
+          this.cadastroSucessoEnviado.emit(true);
         },
 
         error: (err: HttpErrorResponse) => {
@@ -95,5 +107,37 @@ export class PokemonRegisterComponent extends BaseService implements OnInit{
       descricao: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(250)]],
       imagem: []
     })
+  }
+
+  private initTipos() {
+    this.pokemonService.buscarTiposPokemon().subscribe({
+      next: value => {
+        this.tipos = value;
+      },
+      error: err => {
+        this.resolveErros(err);
+      }
+    });
+  }
+
+  private resolveErros(error: HttpErrorResponse) {
+    switch (error.status) {
+      case 400: {
+        Swal.fire({
+          icon: 'error',
+          title: `${error.error.title}`,
+          text: `${error.error.erros}`,
+        })
+      }
+        break;
+
+      case 404: {
+        Swal.fire(
+          'Página não encontrada',
+          'question'
+        )
+      }
+        break;
+    }
   }
 }

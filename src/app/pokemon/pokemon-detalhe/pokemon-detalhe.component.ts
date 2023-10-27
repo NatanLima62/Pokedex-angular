@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {
   AtualizarPokemonImputModel,
   PokemonTipoViewModel,
@@ -8,26 +8,34 @@ import {
 import {PokemonService} from "../pokemon.service";
 import Swal from "sweetalert2";
 import {HttpErrorResponse} from "@angular/common/http";
-import {ActivatedRoute, Router} from "@angular/router";
-import {switchMap} from "rxjs";
+import {ActivatedRoute} from "@angular/router";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgForOf, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-pokemon-detalhe',
+  standalone: true,
   templateUrl: './pokemon-detalhe.component.html',
+  imports: [
+    ReactiveFormsModule,
+    NgIf,
+    NgForOf
+  ],
   styleUrls: ['./pokemon-detalhe.component.scss']
 })
 export class PokemonDetalheComponent implements OnInit {
   formulario!: FormGroup;
   tipos!: PokemonTipoViewModel[];
   pokemon!: PokemonViewModel;
-  pokemonId!: number;
-  valorHeader: string = "Detalhes do pokemón";
+  @Input() pokemonId!: number;
+  @Output() updateSucessoEnviado: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() removeSucessoEnviado: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
-    private router: Router,
     private service: PokemonService,
     private activedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    public activeModal: NgbActiveModal) {
   }
 
   ngOnInit(): void {
@@ -36,38 +44,35 @@ export class PokemonDetalheComponent implements OnInit {
   }
 
   onSubmit() {
-    this.activedRoute.params.subscribe(params => {
-      const id = +params['id'];
-      if (!isNaN(id)) {
-        if (this.formulario.valid) {
-          const pokemon: AtualizarPokemonImputModel = {
-            id: id,
-            nome: this.formulario.controls['nome'].value,
-            descricao: this.formulario.controls['descricao'].value,
-            pokemonTipoId: this.formulario.controls['pokemontipo'].value,
-            imagem: this.formulario.controls['imagem'].value,
-          };
+    if (this.formulario.valid) {
+      const pokemon: AtualizarPokemonImputModel = {
+        id: this.pokemonId,
+        nome: this.formulario.controls['nome'].value,
+        descricao: this.formulario.controls['descricao'].value,
+        pokemonTipoId: this.formulario.controls['pokemontipo'].value,
+        imagem: this.formulario.controls['imagem'].value,
+      };
 
-          this.service.atualizarPokemon(id, pokemon).subscribe({
-            next: value => {
-              Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: 'Pokemón atualizado com sucesso!',
-                showConfirmButton: false,
-                timer: 1500
-              });
-            },
-            error: (err: HttpErrorResponse) => {
-              console.error(err);
-              this.resolveErros(err);
-            }
+      this.service.atualizarPokemon(this.pokemonId, pokemon).subscribe({
+        next: value => {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Pokemón atualizado com sucesso!',
+            showConfirmButton: false,
+            timer: 1500
           });
-        } else {
-          this.verificarValidacoesDeErro(this.formulario);
+
+          this.updateSucessoEnviado.emit(true);
+        },
+        error: (err: HttpErrorResponse) => {
+          console.error(err);
+          this.resolveErros(err);
         }
-      }
-    });
+      });
+    } else {
+      this.verificarValidacoesDeErro(this.formulario);
+    }
   }
 
   getErrors(controlName: string): string[] {
@@ -134,20 +139,15 @@ export class PokemonDetalheComponent implements OnInit {
       imagem: []
     });
 
-    this.activedRoute.params.pipe(
-      switchMap(params => {
-        const id = params['id'];
-        return this.service.obterPokemonPorId(id);
-      })
-    ).subscribe(
-      (pokemon: PokemonViewModel) => {
-        this.pokemon = pokemon;
+    this.service.obterPokemonPorId(this.pokemonId).subscribe({
+      next: value => {
+        this.pokemon = value;
         this.inicializarFormularioComPokemon();
       },
-      error => {
-        this.resolveErros(error.status);
+      error: err => {
+        this.resolveErros(err.status);
       }
-    );
+    });
   }
 
   private inicializarFormularioComPokemon() {
@@ -183,32 +183,28 @@ export class PokemonDetalheComponent implements OnInit {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Sim!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-
-        this.activedRoute.params.subscribe(params => {
-          const id = +params['id'];
-          if (!isNaN(id)) {
-            this.service.removerPokemon(id).subscribe({
-              error: (err: HttpErrorResponse) => {
-                console.error(err);
-                this.resolveErros(err);
-              }
-            });
-          }
-        });
-        Swal.fire(
-          {
-            title: 'Removido!',
-            text: 'Seu pokémon foi removido.',
-            icon: 'success',
-            showConfirmButton: true
-          }
-        ).then(() => {
-            this.router.navigate(['/']);
-          }
-        )
-      }
     })
+      .then((result) => {
+        if (result.isConfirmed) {
+          this.service.removerPokemon(this.pokemonId).subscribe({
+            next: () => {
+              this.removeSucessoEnviado.emit(true);
+              this.activeModal.close();
+              Swal.fire(
+                {
+                  title: 'Removido!',
+                  text: 'Seu pokémon foi removido.',
+                  icon: 'success',
+                  showConfirmButton: true
+                }
+              )
+            },
+            error: (err: HttpErrorResponse) => {
+              console.error(err);
+              this.resolveErros(err);
+            }
+          });
+        }
+      })
   }
 }

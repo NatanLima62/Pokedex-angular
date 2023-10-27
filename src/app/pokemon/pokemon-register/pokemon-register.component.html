@@ -1,7 +1,9 @@
-<div class="container">
-  <app-pokemon-header [mensagem]="valorHeader"></app-pokemon-header>
-
-  <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+<div class="modal-header">
+  <h4 class="modal-title">Cadastrar</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="formulario">
     <div class="mb-3">
       <label for="nome" class="form-label">Pokemón*</label>
       <input type="email" class="input-form form-control" id="nome" formControlName="nome">
@@ -43,6 +45,9 @@
         </div>
       </div>
     </div>
-    <button type="submit" class="btn btn-danger">Cadastrar</button>
   </form>
+</div>
+<div class="modal-footer">
+  <button type="submit" class="btn btn-primary" (click)="onSubmit()">Cadastrar</button>
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
 </div>

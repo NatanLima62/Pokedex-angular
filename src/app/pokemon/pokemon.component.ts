@@ -1,11 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {PokemonTipoViewModel, PokemonViewModel} from "./domain-types/models/pokemon";
 import {PokemonService} from "./pokemon.service";
 import Swal from "sweetalert2";
 import {HttpErrorResponse} from "@angular/common/http";
-import {Router} from "@angular/router";
 import * as _ from 'lodash';
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {PokemonRegisterComponent} from "./pokemon-register/pokemon-register.component";
+import {PokemonDetalheComponent} from "./pokemon-detalhe/pokemon-detalhe.component";
 
 @Component({
   selector: 'app-pokemon',
@@ -13,35 +15,37 @@ import * as _ from 'lodash';
   styleUrls: ['./pokemon.component.scss']
 })
 export class PokemonComponent implements OnInit {
-  formulario!: FormGroup;
+  formularioDeBusca!: FormGroup;
   tipos: PokemonTipoViewModel[] = [];
   pokemons: PokemonViewModel[] = [];
   possuiPokemons: boolean = false;
   valorHeader: string = "Bem vindo treinador!";
+  pokemonId: number = 0;
+  @ViewChild('cadastroModal') cadastroModal: any;
 
   constructor(
-    private router: Router,
     private service: PokemonService,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private modalService: NgbModal) {
   }
 
   ngOnInit(): void {
     this.initTipos();
-    this.initForm();
+    this.initFormBusca();
     this.buscarPokemons();
   }
 
   onBuscar() {
     const buscar = {
-      nome: this.formulario.controls['nome'].value,
-      pokemontipoid: this.formulario.controls['pokemontipo'].value
+      nome: this.formularioDeBusca.controls['nome'].value,
+      pokemontipoid: this.formularioDeBusca.controls['pokemontipo'].value
     }
 
     this.bucarPokemonsPorNomeETipo(buscar.nome, buscar.pokemontipoid);
   }
 
-  private initForm() {
-    this.formulario = this.formBuilder.group({
+  private initFormBusca() {
+    this.formularioDeBusca = this.formBuilder.group({
       nome: [null],
       pokemontipo: [null],
     })
@@ -102,12 +106,8 @@ export class PokemonComponent implements OnInit {
     }
   }
 
-  abrirCard(id: number) {
-    this.router.navigate([`pokemons/${id}`]);
-  }
-
   limparCampos() {
-    this.formulario.reset();
+    this.formularioDeBusca.reset();
     this.buscarPokemons()
   }
 
@@ -121,5 +121,29 @@ export class PokemonComponent implements OnInit {
   formatarTexto(texto: string): string {
     const textoSemAcentos = _.deburr(texto);
     return textoSemAcentos.toLowerCase();
+  }
+
+  abrirDetalhesModal(id: number) {
+    const modalRef = this.modalService.open(PokemonDetalheComponent);
+    modalRef.componentInstance.pokemonId = this.pokemonId = id;
+    modalRef.componentInstance.updateSucessoEnviado.subscribe((success: boolean) => {
+      if (success) {
+        this.buscarPokemons();
+      }
+    });
+    modalRef.componentInstance.removeSucessoEnviado.subscribe((success: boolean) => {
+      if (success) {
+        this.buscarPokemons();
+      }
+    });
+  }
+
+  open() {
+    const modalRef = this.modalService.open(PokemonRegisterComponent);
+    modalRef.componentInstance.cadastroSucessoEnviado.subscribe((success: boolean) => {
+      if (success) {
+        this.buscarPokemons();
+      }
+    });
   }
 }
